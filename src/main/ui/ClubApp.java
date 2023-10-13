@@ -134,15 +134,11 @@ public class ClubApp {
         if (command1.equals("v")) {
             ArrayList<Volunteer> volunteers =
                     student1.viewVolunteer(education);
-            for (Volunteer volunteer : volunteers) {
-                System.out.println(volunteer.getName());
-            }
+
+            System.out.println("Our volunteers: " + volunteers);
         } else {
             student1.addToAcademicList(education);
-            System.out.println("Your Question has been added!: ");
-            for (AcademicConfusion confusion : confusions) {
-                System.out.println(confusion.getId());
-            }
+            System.out.println("Your Question has been added!: " + confusions);
         }
 
     }
@@ -156,14 +152,8 @@ public class ClubApp {
         ArrayList<KenyaStudent> studnets = education.getStudentList();
         ArrayList<Volunteer> volunteers = education.getVolunteerList();
 
-        System.out.println("Current Student list: ");
-        for (KenyaStudent student : studnets) {
-            System.out.println(student.getName());
-        }
-        System.out.println("Current Volunteer list: ");
-        for (Volunteer volunteer : volunteers) {
-            System.out.println(volunteer.getName());
-        }
+        System.out.println("Current Student list: " + studnets);
+        System.out.println("Current Volunteer list: " + volunteers);
 
         System.out.println("\nWhat do you want to do:");
         System.out.println("\ta -> know the number of volunteers");
@@ -181,10 +171,7 @@ public class ClubApp {
             System.out.println("Number of Students: " + num1);
         } else {
             director1.addVolunteer(education,volunteer1);
-            System.out.println("New volunteer has been added!: ");
-            for (Volunteer volunteer : volunteers) {
-                System.out.println(volunteer.getName());
-            }
+            System.out.println("New volunteer has been added!: " + volunteers);
         }
     }
 
@@ -201,10 +188,7 @@ public class ClubApp {
         ArrayList<AcademicConfusion> beingAnswered =
                 education.getQuestionsBeingAnswered();
 
-        System.out.println("Students we have so far:");
-        for (Volunteer volunteer : volunteers) {
-            System.out.println(volunteer.getName());
-        }
+        System.out.println("Students we have so far:" + students);
         System.out.println("Questions being answered: " + beingAnswered);
 
         System.out.println("\nWhat do you want to do:");

@@ -39,15 +39,11 @@ information and resources.
 ### User Stories
 - As a Kenya student, I want to be able to 
   add my academic confusion to the questions list
-- As a UBC volunteer, I want to be able to view a list of all the Kenyan students.
 - As a Kenya student, I want to be able to view a list of all the UBC volunteers.
-- As a UBC volunteer, I want to be able to add the academic confusion to the 
-beingAnsweredList if I'm working on it and remove it from questionsList.
+- As a UBC volunteer, I want to be able to view a list of all the Kenyan students.
 - As a UBC volunteer, I want to be able to remove the academic confusion 
 that I resolved from the beingAnsweredList.
 - As a Club Director, I want to be able to know the number of volunteers we have
 - As a Club Director, I want to know the number of Kenyan students we have.
-- As a Club Director, I want to be able to add a volunteer or Kenya student to 
-  the corresponding list in our system.
-- As a Club Director, I want to be able to check if a student's question has 
-    been answered and set his/her confusion to null if it has been answered.
+- As a Club Director, I want to be able to add a volunteer into our system.
+

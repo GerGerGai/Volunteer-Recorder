@@ -152,8 +152,8 @@ public class ClubApp {
         ArrayList<KenyaStudent> studnets = education.getStudentList();
         ArrayList<Volunteer> volunteers = education.getVolunteerList();
 
-        System.out.println("Current Student list: " + studnets);
-        System.out.println("Current Volunteer list: " + volunteers);
+        System.out.println("Current Student list: ");
+        viewVolunteers(volunteers);
 
         System.out.println("\nWhat do you want to do:");
         System.out.println("\ta -> know the number of volunteers");
@@ -207,5 +207,17 @@ public class ClubApp {
                     + beingAnswered);
         }
 
+    }
+
+
+    private void viewVolunteers(ArrayList<Volunteer> volunteers) {
+        System.out.println("Current Volunteer List: ");
+        for (Volunteer volunteer : volunteers) {
+            String result = "Name:" + volunteer.getName() + " id:"
+                    + volunteer.getId() + " Year:" + volunteer.getYear()
+                    + " Major:" + volunteer.getMajor();
+
+            System.out.println(result);
+        }
     }
 }

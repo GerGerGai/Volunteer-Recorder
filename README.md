@@ -46,4 +46,8 @@ that I resolved from the beingAnsweredList.
 - As a Club Director, I want to be able to know the number of volunteers we have
 - As a Club Director, I want to know the number of Kenyan students we have.
 - As a Club Director, I want to be able to add a volunteer into our system.
+- As a general user, I want to be able to decide whether to save the entire 
+state of the application or not when I quit the app.
+- As a general user, I want to be able to decide whether to resume the app from 
+where they left off or not when I start the application.
 

@@ -1,11 +1,14 @@
 package ui;
 
 import model.*;
-import org.w3c.dom.ls.LSOutput;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
 
 public class ClubApp {
 
@@ -61,14 +64,14 @@ public class ClubApp {
     }
 
     private void init() {
-        education = new Education();
+        education = new Education("Education Department");
 
         input = new Scanner(System.in);
         input.useDelimiter("\n");
 
         director1 = new Director("Jack","math",10000,3);
         director2 = new Director("Mark","math",10001,2);
-        director3 = new Director("Tom","physice",10002,2);
+        director3 = new Director("Tom","physics",10002,2);
 
         volunteer1 = new UniversityVolunteer("Emma","math",
                 10003,3);
@@ -122,9 +125,8 @@ public class ClubApp {
         student1.setAcademicConfusion(ac1);
 
         ArrayList<AcademicConfusion> confusions = education.getQuestions();
-        System.out.println("Confusions we have so far: " + confusions);
+        viewQuestionsNotAnswered(confusions);
 
-        System.out.println("\nWhat do you want to do:");
         System.out.println("\tv -> view a list of volunteers");
         System.out.println("\ta -> Add my confusion to the questions list");
 
@@ -132,13 +134,12 @@ public class ClubApp {
         command1 = command1.toLowerCase();
 
         if (command1.equals("v")) {
-            ArrayList<Volunteer> volunteers =
-                    student1.viewVolunteer(education);
-
-            System.out.println("Our volunteers: " + volunteers);
+            ArrayList<Volunteer> volunteers = student1.viewVolunteer(education);
+            viewVolunteers(volunteers);
         } else {
             student1.addToAcademicList(education);
-            System.out.println("Your Question has been added!: " + confusions);
+            System.out.println("Your question has been added!");
+            viewQuestionsNotAnswered(education.getQuestions());
         }
 
     }
@@ -149,10 +150,8 @@ public class ClubApp {
 
         education.addStudents(student1);
 
-        ArrayList<KenyaStudent> studnets = education.getStudentList();
         ArrayList<Volunteer> volunteers = education.getVolunteerList();
 
-        System.out.println("Current Student list: ");
         viewVolunteers(volunteers);
 
         System.out.println("\nWhat do you want to do:");
@@ -171,7 +170,7 @@ public class ClubApp {
             System.out.println("Number of Students: " + num1);
         } else {
             director1.addVolunteer(education,volunteer1);
-            System.out.println("New volunteer has been added!: " + volunteers);
+            viewVolunteers(volunteers);
         }
     }
 
@@ -188,8 +187,8 @@ public class ClubApp {
         ArrayList<AcademicConfusion> beingAnswered =
                 education.getQuestionsBeingAnswered();
 
-        System.out.println("Students we have so far:" + students);
-        System.out.println("Questions being answered: " + beingAnswered);
+        viewStudents(students);
+        viewQuestionsAnswered(beingAnswered);
 
         System.out.println("\nWhat do you want to do:");
         System.out.println("\ta -> know the number of Kenya students");
@@ -203,21 +202,64 @@ public class ClubApp {
             System.out.println("Number of volunteers: " + num);
         } else if (command1.equals("b")) {
             volunteer1.removeConfusion(education,ac1);
-            System.out.println("The question has been removed "
-                    + beingAnswered);
+            viewQuestionsAnswered(beingAnswered);
         }
 
     }
 
+    // EFFECTS: print out the list of Academic Confusions not being answered
+    private void viewQuestionsNotAnswered(ArrayList<AcademicConfusion> confusions) {
+        System.out.println("Confusions we have so far not being answered: ");
+        for (AcademicConfusion confusion : confusions) {
+            System.out.println("id: " + confusion.getId());
+            System.out.println("subject: " + confusion.getSubject());
+            System.out.println("description: " + confusion.getDescription());
+            System.out.println(" ");
+        }
+    }
 
+    // EFFECTS: print out the list of Academic Confusions being answered
+    private void viewQuestionsAnswered(ArrayList<AcademicConfusion> confusions) {
+        System.out.println("Confusions we have so far being answered: ");
+        for (AcademicConfusion confusion : confusions) {
+            System.out.println("id: " + confusion.getId());
+            System.out.println("subject: " + confusion.getSubject());
+            System.out.println("description: " + confusion.getDescription());
+            System.out.println(" ");
+        }
+    }
+
+    // EFFECTS: print out the list of Volunteers we have
     private void viewVolunteers(ArrayList<Volunteer> volunteers) {
-        System.out.println("Current Volunteer List: ");
+        System.out.println("Volunteers we have so far: ");
         for (Volunteer volunteer : volunteers) {
-            String result = "Name:" + volunteer.getName() + " id:"
-                    + volunteer.getId() + " Year:" + volunteer.getYear()
-                    + " Major:" + volunteer.getMajor();
-
-            System.out.println(result);
+            System.out.println("Name: " + volunteer.getName());
+            System.out.println("id: " + volunteer.getId());
+            System.out.println("major: " + volunteer.getMajor());
+            System.out.println("year: " + volunteer.getYear());
+            System.out.println(" ");
         }
     }
+
+    private void viewStudents(ArrayList<KenyaStudent> students) {
+        System.out.println("Kenya Students we have so far: ");
+        for (KenyaStudent student : students) {
+            System.out.println("Name: " + student.getName());
+            System.out.println("id: " + student.getId());
+            System.out.println("Grade: " + student.getGrade());
+            AcademicConfusion confusion = student.getAcademicConfusion();
+
+            if (confusion != null) {
+                System.out.println("The student's academic confusion: ");
+                System.out.println("id: " + confusion.getId());
+                System.out.println("subject: " + confusion.getSubject());
+                System.out.println("description: " + confusion.getDescription());
+            } else {
+                System.out.println("The student currently has no questions");
+            }
+
+            System.out.println(" ");
+        }
+    }
+
 }

@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 // Abstract class of a volunteer
-public abstract class Volunteer {
+public abstract class Volunteer implements Writable {
 
     String name;
     String major;
@@ -80,6 +83,16 @@ public abstract class Volunteer {
                 education.getQuestionsBeingAnswered();
 
         beingAnswered.remove(ac);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+        json.put("name", name);
+        json.put("major", major);
+        json.put("year", year);
+        return json;
     }
 
 

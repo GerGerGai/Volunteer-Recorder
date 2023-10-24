@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.ArrayList;
 
 // Represents all the information of a Kenyan student.
-public class KenyaStudent {
+public class KenyaStudent implements Writable {
     private int id; // a 5-digit number to identify each student.
     private String name;
     private int grade; // Grade 1 - Grade 4.
@@ -71,6 +74,15 @@ public class KenyaStudent {
         return volunteers;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+        json.put("name", name);
+        json.put("grade", grade);
+        json.put("Academic Confusion", academicConfusion);
+        return json;
+    }
 
 
 }

@@ -22,7 +22,7 @@ public class EducationTest {
 
     @BeforeEach
     public void setup() {
-        education = new Education();
+        education = new Education("Education Department");
 
         volunteer1 = new UniversityVolunteer("Peter","math",
                 10000,3);
@@ -39,6 +39,11 @@ public class EducationTest {
         ac2 = new AcademicConfusion(10001);
         ac3 = new AcademicConfusion(10002);
 
+    }
+
+    @Test
+    public void testGetName() {
+        assertEquals("Education Department",education.getName());
     }
 
 

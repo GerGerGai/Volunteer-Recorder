@@ -1,22 +1,35 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // represents all the information we have in our education department
-public class Education {
+public class Education implements Writable {
+    private String name;
     private ArrayList<Volunteer> volunteerList;
     private ArrayList<KenyaStudent> studentList;
     private ArrayList<AcademicConfusion> questions;
     private ArrayList<AcademicConfusion> questionsBeingAnswered;
 
     // EFFECTS: creates an education department object
-    //          with the four lists needed.
-    public Education() {
+    //          with the four empty lists needed.
+    public Education(String name) {
+        this.name = name;
         volunteerList = new ArrayList<>();
         studentList = new ArrayList<>();
         questions = new ArrayList<>();
         questionsBeingAnswered = new ArrayList<>();
 
+    }
+
+    //EFFECTS: return the name of this education department
+    public String getName() {
+        return this.name;
     }
 
     // EFFECTS: get all the volunteers we have so far.
@@ -29,7 +42,7 @@ public class Education {
         return studentList;
     }
 
-    // EFFECTS: get all the academic questions we have so far.
+    // EFFECTS: get all the academic questions not being answered we have so far.
     public ArrayList<AcademicConfusion> getQuestions() {
         return questions;
     }
@@ -102,4 +115,65 @@ public class Education {
     public void removeQuestionsBeingAnswered(AcademicConfusion confusion) {
         questionsBeingAnswered.remove(confusion);
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("volunteerList", volunteerToJson());
+        json.put("studentList",studentToJson());
+        json.put("questionList",questionToJson());
+        json.put("questionBeingAnsweredList",questionBeingToJson());
+        return json;
+    }
+
+    //EFFECTS: returns volunteers in this department as a JSON array
+    private JSONArray volunteerToJson() {
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Volunteer volunteer : volunteerList) {
+            jsonArray.put(volunteer.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    //EFFECTS: returns students in this department as a JSON array
+    private JSONArray studentToJson() {
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (KenyaStudent student : studentList) {
+            jsonArray.put(student.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    //EFFECTS: returns questions not being answered
+    //          in this department as a JSON array
+    private JSONArray questionToJson() {
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (AcademicConfusion confusion : questions) {
+            jsonArray.put(confusion.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    //EFFECTS: returns questions being answered in this department as a JSON array
+    private JSONArray questionBeingToJson() {
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (AcademicConfusion confusion : questionsBeingAnswered) {
+            jsonArray.put(confusion.toJson());
+        }
+
+        return jsonArray;
+    }
+
 }

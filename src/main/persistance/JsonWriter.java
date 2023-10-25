@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 // Represents a writer that writes JSON representation of education to file
+// Codes inspired by "https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo"
 public class JsonWriter {
 
     private static final int TAB = 4;

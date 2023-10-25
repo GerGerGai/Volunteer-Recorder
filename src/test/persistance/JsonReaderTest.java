@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Codes inspired by "https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo"
 public class JsonReaderTest extends JsonTest{
 
     private Education education;

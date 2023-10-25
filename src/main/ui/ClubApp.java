@@ -14,6 +14,7 @@ import persistance.JsonReader;
 import persistance.JsonWriter;
 
 // Represents our club application
+// Codes inspired by "https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo"
 public class ClubApp {
 
     private static final String JSON_STORE = "./data/Education.json";

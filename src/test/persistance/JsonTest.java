@@ -9,6 +9,7 @@ import model.Volunteer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// Codes inspired by "https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo"
 public class JsonTest {
 
     protected void checkVolunteer(Volunteer volunteer1, Volunteer volunteer2) {

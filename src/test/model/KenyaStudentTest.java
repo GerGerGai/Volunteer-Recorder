@@ -28,7 +28,7 @@ public class KenyaStudentTest {
         student2 = new KenyaStudent(10002,"Jack",2);
         student3 = new KenyaStudent(10003,"Mark",4);
 
-        education = new Education();
+        education = new Education("aa");
 
         ac1 = new AcademicConfusion(10001);
         ac2 = new AcademicConfusion(10002);

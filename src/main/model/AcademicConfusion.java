@@ -3,6 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistance.Writable;
 
+import java.util.Objects;
+
 // Represents the academic confusion each student has.
 public class AcademicConfusion implements Writable {
     private int id; //the id of the student asking this question
@@ -54,4 +56,6 @@ public class AcademicConfusion implements Writable {
         json.put("description", description);
         return json;
     }
+
+
 }

@@ -18,7 +18,7 @@ public class UniversityVolunteerTest extends VolunteerTest{
         volunteer3 = new UniversityVolunteer("Amy","biology",
                 10002,3);
 
-        education = new Education();
+        education = new Education("dd");
 
         student1 = new KenyaStudent(10000,"Peter",3);
         student2 = new KenyaStudent(10001,"Emma",2);

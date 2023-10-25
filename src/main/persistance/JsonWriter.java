@@ -4,6 +4,7 @@ import model.Education;
 import org.json.JSONObject;
 import java.io.*;
 
+// Represents a writer that writes JSON representation of education to file
 public class JsonWriter {
 
     private static final int TAB = 4;

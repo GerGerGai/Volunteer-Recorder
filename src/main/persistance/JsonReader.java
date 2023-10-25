@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Represents a reader that reads education from JSON data stored in file
 public class JsonReader {
 
     private String source;
@@ -86,11 +87,25 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         int id = jsonObject.getInt("id");
         int grade = jsonObject.getInt("grade");
-        AcademicConfusion ac = (AcademicConfusion) jsonObject.get("Academic Confusion");
+        AcademicConfusion ac = academicConfusionForStudent((JSONObject) jsonObject.get("Academic Confusion"));
         KenyaStudent student = new KenyaStudent(id,name,grade);
         student.setAcademicConfusion(ac);
         education.addStudents(student);
     }
+
+    //EFFECTS: add Academic confusion for student
+    private AcademicConfusion academicConfusionForStudent(JSONObject jsonObject) {
+        String subject = jsonObject.getString("subject");
+        String description = jsonObject.getString("description");
+        int id = jsonObject.getInt("id");
+
+        AcademicConfusion ac = new AcademicConfusion(id);
+        ac.setDescription(description);
+        ac.setSubject(subject);
+
+        return ac;
+    }
+
 
     // MODIFIES: education
     // EFFECTS: parses Questions from JSON object and adds them to education

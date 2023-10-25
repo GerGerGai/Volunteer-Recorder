@@ -40,7 +40,10 @@ information and resources.
 - As a Kenya student, I want to be able to 
   add my academic confusion to the questions list
 - As a Kenya student, I want to be able to view a list of all the UBC volunteers.
+- As a new Kenya student, I want to be able to add myself to the system.
 - As a UBC volunteer, I want to be able to view a list of all the Kenyan students.
+- As a UBC volunteer, I want to be able to remove a question from the questions list
+and add it to the questionBeingAnswered list if I'm working on it.
 - As a UBC volunteer, I want to be able to remove the academic confusion 
 that I resolved from the beingAnsweredList.
 - As a Club Director, I want to be able to know the number of volunteers we have

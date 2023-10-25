@@ -29,7 +29,7 @@ public class DirectorTest extends VolunteerTest{
                 10004,2);
 
 
-        education = new Education();
+        education = new Education("aa");
 
         student1 = new KenyaStudent(10000,"Peter",3);
         student2 = new KenyaStudent(10001,"Emma",2);

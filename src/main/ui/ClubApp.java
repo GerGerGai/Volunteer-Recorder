@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,34 +10,33 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
+// Represents our club application
 public class ClubApp {
 
-    Education education;
+    private static final String JSON_STORE = "./data/Education.json";
 
     private Scanner input;
 
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    Education education;
+
     Director director1;
-    Director director2;
-    Director director3;
 
     UniversityVolunteer volunteer1;
-    UniversityVolunteer volunteer2;
-    UniversityVolunteer volunteer3;
-    UniversityVolunteer volunteer4;
 
     KenyaStudent student1;
-    KenyaStudent student2;
-    KenyaStudent student3;
-    KenyaStudent student4;
 
-    AcademicConfusion ac1;
-    AcademicConfusion ac2;
-    AcademicConfusion ac3;
-    AcademicConfusion ac4;
 
-    // EFFECTS: runs the club application
-    public ClubApp() {
+
+    // EFFECTS: constructs the club and runs the club application
+    public ClubApp() throws FileNotFoundException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runClubApp();
     }
 
@@ -47,6 +47,8 @@ public class ClubApp {
         String command = null;
 
         init();
+
+        loadHistory();
 
         while (keepGoing) {
             displayMenu();
@@ -60,9 +62,13 @@ public class ClubApp {
             }
         }
 
+        saveWork();
+
         System.out.println("\nThank you for using the app!");
     }
 
+    // MODIFIES: this, education
+    // EFFECTS: initialize the app system
     private void init() {
         education = new Education("Education Department");
 
@@ -70,27 +76,9 @@ public class ClubApp {
         input.useDelimiter("\n");
 
         director1 = new Director("Jack","math",10000,3);
-        director2 = new Director("Mark","math",10001,2);
-        director3 = new Director("Tom","physics",10002,2);
-
         volunteer1 = new UniversityVolunteer("Emma","math",
                 10003,3);
-        volunteer2 = new UniversityVolunteer("Mia","biology",
-                10004,2);
-        volunteer3 = new UniversityVolunteer("Jerry","math",
-                10005,4);
-        volunteer4 = new UniversityVolunteer("Hao","chemistry",
-                10006,2);
-
-        student1 = new KenyaStudent(10000,"Kahan",3);
-        student2 = new KenyaStudent(10001,"Gyn",2);
-        student3 = new KenyaStudent(10002,"Ismael",4);
-        student4 = new KenyaStudent(10003,"Molan",2);
-
-        ac1 = new AcademicConfusion(10000);
-        ac2 = new AcademicConfusion(10001);
-        ac3 = new AcademicConfusion(10002);
-        ac4 = new AcademicConfusion(10003);
+        student1 = new KenyaStudent(10000,"Mark",3);
     }
 
     // EFFECTS: displays menu of options to user
@@ -116,19 +104,67 @@ public class ClubApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: load the history of the system
+    private void loadHistory() {
+        String command111 = null;
+        Scanner inputLoad = new Scanner(System.in);
+        System.out.println("\n Do you want to start from last time?");
+        System.out.println("\ty -> Yes, please!");
+        System.out.println("\tn -> Nope.");
+
+        command111 = inputLoad.next();
+        if (command111.equals("y")) {
+            try {
+                education = jsonReader.read();
+                System.out.println("Loaded " + education.getName() + " from " + JSON_STORE);
+            } catch (IOException e) {
+                System.out.println("Unable to read from file: " + JSON_STORE);
+            }
+        }
+    }
+
+    //EFFECTS: prompt the user to save the work.
+    private void saveWork() {
+        String command111 = null;
+        Scanner inputSave = new Scanner(System.in);
+        System.out.println("\n Do you want to save everything so far?");
+        System.out.println("\ty -> Yes, please save it!");
+        System.out.println("\tn -> Nope.");
+
+        command111 = inputSave.next();
+        if (command111.equals("y")) {
+            saveEducation();
+            System.out.println("Save successfully!");
+        }
+    }
+
+    // EFFECTS: saves the education to file
+    private void saveEducation() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(education);
+            jsonWriter.close();
+            System.out.println("Saved " + education.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    //EFFECTS: start what students can do
     public void doStudent() {
         String command1 = null;
-        education.addQuestions(ac4);
-        education.addVolunteers(volunteer4);
-        education.addVolunteers(volunteer3);
-
-        student1.setAcademicConfusion(ac1);
-
+//        education.addQuestions(ac4);
+//        education.addVolunteers(volunteer4);
+//        education.addVolunteers(volunteer3);
+//
+//        student1.setAcademicConfusion(ac1);
+//
         ArrayList<AcademicConfusion> confusions = education.getQuestions();
-        viewQuestionsNotAnswered(confusions);
-
+        System.out.println("\tn -> I'm a new Student for this club");
         System.out.println("\tv -> view a list of volunteers");
-        System.out.println("\ta -> Add my confusion to the questions list");
+        System.out.println("\ta -> Update my Academic Confusion and update the new"
+                + " one to the club's question list");
 
         command1 = input.next();
         command1 = command1.toLowerCase();
@@ -136,23 +172,26 @@ public class ClubApp {
         if (command1.equals("v")) {
             ArrayList<Volunteer> volunteers = student1.viewVolunteer(education);
             viewVolunteers(volunteers);
-        } else {
-            student1.addToAcademicList(education);
+        } else if (command1.equals("a")) {
+            updateStudentConfusion();
             System.out.println("Your question has been added!");
             viewQuestionsNotAnswered(education.getQuestions());
+        } else if (command1.equals("n")) {
+            setupNewStudent();
+            System.out.println("You have been added to our system!");
+            System.out.println("We have added your academic question to the system!");
+        } else {
+            System.out.println("Invalid input ...");
         }
 
     }
 
+    //EFFECTS: start the functions of director
     public void doDirector() {
         String command1 = null;
-        education.addVolunteers(volunteer4);
-
-        education.addStudents(student1);
 
         ArrayList<Volunteer> volunteers = education.getVolunteerList();
 
-        viewVolunteers(volunteers);
 
         System.out.println("\nWhat do you want to do:");
         System.out.println("\ta -> know the number of volunteers");
@@ -168,41 +207,44 @@ public class ClubApp {
         } else if (command1.equals("b")) {
             int num1 = director1.numKenyaStudents(education);
             System.out.println("Number of Students: " + num1);
-        } else {
-            director1.addVolunteer(education,volunteer1);
+        } else if (command1.equals("c")) {
+//            director1.addVolunteer(education,volunteer1);
+//            viewVolunteers(volunteers);
+            addVolunteers();
+            System.out.println("The new volunteer has been added!");
             viewVolunteers(volunteers);
         }
     }
 
+    //EFFECTS: start the functions of volunteers
     private void doVolunteer() {
         String command1 = null;
 
-        education.addStudents(student1);
-        education.addStudents(student2);
-
-        education.addQuestionsBeingAnswered(ac1);
-        education.addQuestionsBeingAnswered(ac2);
 
         ArrayList<KenyaStudent> students = education.getStudentList();
         ArrayList<AcademicConfusion> beingAnswered =
                 education.getQuestionsBeingAnswered();
+        ArrayList<AcademicConfusion> questions = education.getQuestions();
 
-        viewStudents(students);
-        viewQuestionsAnswered(beingAnswered);
+
+
 
         System.out.println("\nWhat do you want to do:");
-        System.out.println("\ta -> know the number of Kenya students");
-        System.out.println("\tb -> remove a question");
+        System.out.println("\tv -> view a list of all Kenya Students");
+        System.out.println("\tn -> work on a new question");
+        System.out.println("\tr -> remove a question I resolved");
 
         command1 = input.next();
         command1 = command1.toLowerCase();
 
-        if (command1.equals("a")) {
-            int num = students.size();
-            System.out.println("Number of volunteers: " + num);
-        } else if (command1.equals("b")) {
-            volunteer1.removeConfusion(education,ac1);
-            viewQuestionsAnswered(beingAnswered);
+        if (command1.equals("v")) {
+            viewStudents(students);
+        } else if (command1.equals("r")) {
+            removeQuestionAnswered(beingAnswered);
+        } else if (command1.equals("n")) {
+            workNewQuestion(questions, beingAnswered);
+        } else {
+            System.out.println("Invalid input...");
         }
 
     }
@@ -241,6 +283,7 @@ public class ClubApp {
         }
     }
 
+    //EFFECTS: view a list of students
     private void viewStudents(ArrayList<KenyaStudent> students) {
         System.out.println("Kenya Students we have so far: ");
         for (KenyaStudent student : students) {
@@ -260,6 +303,205 @@ public class ClubApp {
 
             System.out.println(" ");
         }
+    }
+
+    //MODIFIES: Kenya student
+    //EFFECTS: update the student's question
+    private AcademicConfusion updateConfusion(int id) {
+        String command1 = null;
+        Scanner inputThis = new Scanner(System.in);
+        AcademicConfusion newConfusion = new AcademicConfusion(id);
+        System.out.println("\n Please select one of the four subjects:");
+        System.out.println("\tb -> Biology");
+        System.out.println("\tm -> Math");
+        System.out.println("\tp -> Physics");
+        System.out.println("\tc -> Chemistry");
+
+        command1 = inputThis.next();
+        command1 = command1.toLowerCase();
+
+        setSubject(command1,newConfusion);
+
+        inputThis = new Scanner(System.in);
+        System.out.println("\n Please type your problem description: ");
+        String description = inputThis.nextLine();
+
+        newConfusion.setDescription(description);
+
+        return newConfusion;
+    }
+
+    //MODIFIES: Academic Confusion
+    //EFFECTS: set the subject of the ac
+    private void setSubject(String command1, AcademicConfusion ac) {
+        if (command1.equals("b")) {
+            ac.setSubject("biology");
+        } else if (command1.equals("m")) {
+            ac.setSubject("math");
+        } else if (command1.equals("p")) {
+            ac.setSubject("physics");
+        } else if (command1.equals("c")) {
+            ac.setSubject("chemistry");
+        } else {
+            System.out.println("Invalid input...");
+        }
+    }
+
+    //EFFECTS: find the studnet with the same id in the system
+    private KenyaStudent checkStudent(Education education, int id) {
+        ArrayList<KenyaStudent> students = education.getStudentList();
+        for (KenyaStudent student : students) {
+            if (student.getId() == id) {
+                return student;
+            }
+        }
+
+        return null;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: remove old questions from the system
+    private void removeOldQuestion(Education education, AcademicConfusion ac) {
+
+        ArrayList<AcademicConfusion> confusions = education.getQuestions();
+        ArrayList<AcademicConfusion> confusions1 = education.getQuestionsBeingAnswered();
+
+        if (confusions.contains(ac)) {
+            confusions.remove(ac);
+        } else {
+            confusions1.remove(ac);
+        }
+
+    }
+
+    //MODIFIES: this, Kenya Student
+    //EFFECTS: update student's confusion
+    private void updateStudentConfusion() {
+        String command33 = null;
+        Scanner inputThis = new Scanner(System.in);
+        System.out.println("\n What is your id? ");
+        command33 = inputThis.nextLine();
+        int id = Integer.parseInt(command33);
+        AcademicConfusion newAc = updateConfusion(id);
+        KenyaStudent student = checkStudent(education,id);
+        removeOldQuestion(education, student.getAcademicConfusion());
+        student.setAcademicConfusion(newAc);
+        student.addToAcademicList(education);
+    }
+
+    //REQUIRES: the student was not in our education
+    //MODIFIES: education
+    //EFFECTS: add a new student to education department, together with
+    //          his/her academic confusion.
+    private void setupNewStudent() {
+        KenyaStudent newStudent;
+
+        String command33 = null;
+        Scanner inputThis = new Scanner(System.in);
+
+        System.out.println("\n What is your id? ");
+        command33 = inputThis.nextLine();
+        int id = Integer.parseInt(command33);
+
+        inputThis = new Scanner(System.in);
+        String command44 = null;
+
+        System.out.println("\n What is your name? ");
+        command44 = inputThis.nextLine();
+        String name = command44;
+
+        inputThis = new Scanner(System.in);
+        String command55 = null;
+
+        System.out.println("\n What is your grade?");
+        command55 = inputThis.nextLine();
+        int grade = Integer.parseInt(command55);
+
+        System.out.println("Now we are going to set you academic confusion");
+
+        AcademicConfusion firstConfusion = updateConfusion(id);
+        newStudent = new KenyaStudent(id,name,grade);
+        newStudent.setAcademicConfusion(firstConfusion);
+        director1.addStudent(education,newStudent);
+        newStudent.addToAcademicList(education);
+    }
+
+    //MODIFIES: education, beingAnswered
+    //EFFECTS: remove a question resolved from the questions being answered list
+    private void removeQuestionAnswered(ArrayList<AcademicConfusion> beingAnswered) {
+        String command111 = null;
+        Scanner inputThis = new Scanner(System.in);
+        System.out.println("Here are the questions being answered: ");
+        viewQuestionsAnswered(beingAnswered);
+        System.out.println(" ");
+        System.out.println("What's the position of the question you are removing?");
+        System.out.println("For example, if it's the second question, type 2 here.");
+        command111 = inputThis.next();
+        int i = Integer.parseInt(command111) - 1;
+        volunteer1.removeConfusion(education,beingAnswered.get(i));
+        System.out.println("Question removed successfully!");
+        viewQuestionsAnswered(beingAnswered);
+    }
+
+    //MODIFIES: education
+    //EFFECTS: let the volunteer work on a new question
+    private void workNewQuestion(ArrayList<AcademicConfusion> questions,
+                                 ArrayList<AcademicConfusion> beingAnswered) {
+        String command000 = null;
+        Scanner inputThis = new Scanner(System.in);
+
+        viewQuestionsNotAnswered(questions);
+        System.out.println(" ");
+        System.out.println("What's the position of the question you want to answer?");
+        System.out.println("For example, if it's the second question, type 2 here");
+
+        command000 = inputThis.nextLine();
+        int i = Integer.parseInt(command000) - 1;
+
+        boolean success = volunteer1.workingOnConfusion(education,questions.get(i));
+
+        if (success) {
+            System.out.println("The question has been removed from the original list!");
+            System.out.println(" ");
+            viewQuestionsNotAnswered(questions);
+            System.out.println(" ");
+            viewQuestionsAnswered(beingAnswered);
+        } else {
+            System.out.println("Sorry! Someone was working on that question! "
+                    + "You may choose another one!");
+        }
+    }
+
+    //REQUIRES: the volunteer was not in our system
+    //MODIFIES: education
+    //EFFECTS: add a new volunteer to the system
+    private void addVolunteers() {
+        String command1 = null;
+        Scanner input1 = new Scanner(System.in);
+        System.out.println("What's the id of the volunteer?: ");
+        command1 = input1.nextLine();
+        int id = Integer.parseInt(command1);
+
+        String command2 = null;
+        Scanner input2 = new Scanner(System.in);
+        System.out.println("What's the name of the volunteer?: ");
+        command2 = input2.nextLine();
+        String name = command2;
+
+        String command3 = null;
+        Scanner input3 = new Scanner(System.in);
+        System.out.println("What's the major of the volunteer?: ");
+        command3 = input3.nextLine();
+        String major = command3;
+
+        String command4 = null;
+        Scanner input4 = new Scanner(System.in);
+        System.out.println("What's the year of the volunteer?: ");
+        command4 = input4.nextLine();
+        int year = Integer.parseInt(command4);
+
+        UniversityVolunteer newVolunteer = new UniversityVolunteer(name,major,id,year);
+        director1.addVolunteer(education,newVolunteer);
     }
 
 }

@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 public interface Writable {
 
-    //EFFECTS: returns a Json Object
+    //EFFECTS: returns as Json Object
     JSONObject toJson();
 
 }

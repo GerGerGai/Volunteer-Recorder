@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import persistance.Writable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Represents all the information of a Kenyan student.
 public class KenyaStudent implements Writable {
@@ -80,9 +81,8 @@ public class KenyaStudent implements Writable {
         json.put("id", id);
         json.put("name", name);
         json.put("grade", grade);
-        json.put("Academic Confusion", academicConfusion);
+        json.put("Academic Confusion", academicConfusion.toJson());
         return json;
     }
-
 
 }

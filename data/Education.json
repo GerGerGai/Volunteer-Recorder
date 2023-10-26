@@ -1,0 +1,79 @@
+{
+    "name": "Education Department",
+    "studentList": [
+        {
+            "grade": 3,
+            "Academic Confusion": {
+                "subject": "biology",
+                "description": "Define a goose",
+                "id": 100
+            },
+            "name": "Jerry",
+            "id": 100
+        },
+        {
+            "grade": 2,
+            "Academic Confusion": {
+                "subject": "math",
+                "description": "What's 1+1?",
+                "id": 101
+            },
+            "name": "Mark",
+            "id": 101
+        },
+        {
+            "grade": 1,
+            "Academic Confusion": {
+                "subject": "physics",
+                "description": "Who's Newton?",
+                "id": 102
+            },
+            "name": "Jack",
+            "id": 102
+        }
+    ],
+    "volunteerList": [
+        {
+            "major": "CS",
+            "year": 4,
+            "name": "Jerry Gai!",
+            "id": 100
+        },
+        {
+            "major": "Math",
+            "year": 2,
+            "name": "Wilson",
+            "id": 101
+        },
+        {
+            "major": "Statistics",
+            "year": 3,
+            "name": "Matt",
+            "id": 122
+        },
+        {
+            "major": "a",
+            "year": 3,
+            "name": "Je",
+            "id": 10000
+        }
+    ],
+    "questionBeingAnsweredList": [],
+    "questionList": [
+        {
+            "subject": "biology",
+            "description": "Define a Cat!",
+            "id": 100
+        },
+        {
+            "subject": "math",
+            "description": "What's 1+1?",
+            "id": 101
+        },
+        {
+            "subject": "biology",
+            "description": "Define a goose",
+            "id": 100
+        }
+    ]
+}

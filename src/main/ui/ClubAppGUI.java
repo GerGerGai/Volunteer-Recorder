@@ -5,6 +5,17 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
+import model.*;
+import persistance.JsonReader;
+import persistance.JsonWriter;
+
 
 public class ClubAppGUI extends JFrame
                         implements ListSelectionListener {
@@ -31,16 +42,29 @@ public class ClubAppGUI extends JFrame
     private static final int WIDTH = 500;
     private static final int HEIGHT = 300;
 
+    private static final String JSON_STORE = "./data/Education.json";
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    Education education;
+    Director director1;
+    UniversityVolunteer volunteer1;
+    KenyaStudent student1;
+
 
 
     public ClubAppGUI() {
 
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
         JPanel outmostPanel = new JPanel(new BorderLayout());
 
         listModel = new DefaultListModel();
-        listModel.addElement("Jane Doe");
-        listModel.addElement("John Smith");
-        listModel.addElement("Kathy Green");
+//        listModel.addElement("Jane Doe");
+//        listModel.addElement("John Smith");
+//        listModel.addElement("Kathy Green");
 
         //Create the list and put it in a scroll pane.
         initVolunteerList();
@@ -283,9 +307,95 @@ public class ClubAppGUI extends JFrame
 
     class LoadListener implements ActionListener {
 
+        private JFrame outMostFrame;
+        private JPanel outMostPanel;
+
+        private JButton yesButton;
+        private JButton noButton;
+
+        private String yesString = "Yes";
+        private String noString = "No";
+
+        JLabel question;
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            outMostPanel = new JPanel(new BorderLayout());
+            outMostFrame = new JFrame();
+
+            JPanel buttonPane = new JPanel();
+            buttonPane.setLayout(new BoxLayout(buttonPane,
+                    BoxLayout.LINE_AXIS));
+
+            initThisButton();
+
+            buttonPane.add(yesButton);
+            buttonPane.add(Box.createHorizontalStrut(10));
+            buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+            buttonPane.add(Box.createHorizontalStrut(10));
+
+            buttonPane.add(noButton);
+
+            buttonPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+            question = new JLabel("Do you want to start from the last time?");
+
+            outMostPanel.add(question,BorderLayout.CENTER);
+            outMostPanel.add(buttonPane,BorderLayout.SOUTH);
+
+            outMostFrame.setContentPane(outMostPanel);
+            outMostFrame.setTitle("Load");
+            outMostFrame.setSize(300, 200);
+
+            outMostFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            outMostFrame.setVisible(true);
+
+
+
+        }
+
+        class YesListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    education = jsonReader.read();
+                    ArrayList<Volunteer> volunteers = education.getVolunteerList();
+                    for (Volunteer v : volunteers) {
+                        String name = v.getName();
+                        listModel.addElement(name);
+                    }
+                    outMostFrame.setVisible(false);
+
+
+                } catch (IOException ioe) {
+                    question.setText("Unable to read from file: " + JSON_STORE);
+                }
+
+            }
+        }
+
+        class NoListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                outMostFrame.setVisible(false);
+
+            }
+        }
+
+        private void initThisButton() {
+            yesButton = new JButton(yesString);
+            noButton = new JButton(noString);
+
+            yesButton.setActionCommand(yesString);
+            yesButton.addActionListener(new YesListener());
+
+            noButton.setActionCommand(noString);
+            noButton.addActionListener(new NoListener());
         }
     }
 

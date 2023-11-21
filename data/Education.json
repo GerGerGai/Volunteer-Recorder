@@ -56,22 +56,16 @@
             "id": 101
         },
         {
-            "major": "Statistics",
-            "year": 3,
-            "name": "Matt",
-            "id": 122
-        },
-        {
             "major": "a",
             "year": 3,
             "name": "Je",
             "id": 10000
         },
         {
-            "major": "math",
-            "year": 2,
-            "name": "jerry",
-            "id": 101
+            "major": "math phd",
+            "year": 3,
+            "name": "魏晨 🐔",
+            "id": 100000
         }
     ],
     "questionBeingAnsweredList": [{

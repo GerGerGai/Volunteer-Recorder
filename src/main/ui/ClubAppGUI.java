@@ -76,7 +76,7 @@ public class ClubAppGUI extends JFrame
 
         JPanel buttonPane2 = initButtonPane2();
 
-        infoArea = new JTextArea(200,300);
+        infoArea = new JTextArea(10,30);
 
         JPanel topPanel = new JPanel(new BorderLayout());
 
@@ -105,10 +105,10 @@ public class ClubAppGUI extends JFrame
 
     private void initButtons() {
         addButton = new JButton(addString);
-        AddListener addListener = new AddListener(addButton);
+//        AddListener addListener = new AddListener(addButton);
         addButton.setActionCommand(addString);
-        addButton.addActionListener(addListener);
-        addButton.setEnabled(false);
+        addButton.addActionListener(new AddListener());
+//        addButton.setEnabled(false);
 
         removeButton = new JButton(removeString);
         removeButton.setActionCommand(removeString);
@@ -192,13 +192,33 @@ public class ClubAppGUI extends JFrame
 
     }
 
-    class AddListener implements ActionListener, DocumentListener {
+    class AddListener implements ActionListener {
         private boolean alreadyEnabled = false;
         private JButton button;
 
-        public AddListener(JButton button) {
-            this.button = button;
-        }
+        private JLabel label1 = new JLabel("id");
+        private JTextField field1 = new JTextField(20);
+
+        private JLabel label2 = new JLabel("name");
+        private JTextField field2 = new JTextField(20);
+
+        private JLabel label3 = new JLabel("major");
+        private JTextField field3 = new JTextField(20);
+
+        private JLabel label4 = new JLabel("year");
+        private JTextField field4 = new JTextField(20);
+
+        JFrame outMostFrame = new JFrame();
+        JPanel outMostPanel = new JPanel(new BorderLayout());
+        JPanel innerPanel1 = new JPanel(new BorderLayout());
+        JPanel innerPanel2 = new JPanel(new BorderLayout());
+        JPanel innerPanel3 = new JPanel(new BorderLayout());
+        JPanel innerPanel4 = new JPanel(new BorderLayout());
+        JPanel innerPanel5 = new JPanel(new BorderLayout());
+        JPanel innerPanel6 = new JPanel(new BorderLayout());
+
+        JButton addButton = new JButton("Add");
+
 
         //Required by ActionListener.
         public void actionPerformed(ActionEvent e) {
@@ -212,31 +232,71 @@ public class ClubAppGUI extends JFrame
 //                return;
 //            }
 
-            int index = volunteerList.getSelectedIndex(); //get selected index
-            if (index == -1) { //no selection, so insert at beginning
-                index = 0;
-            } else {           //add after the selected item
-                index++;
+            setUpWindow();
+
+
+        }
+
+        private void setUpWindow() {
+
+            addButton.setActionCommand("Add");
+            addButton.addActionListener(new AddToListListener());
+
+            innerPanel1.add(label1,BorderLayout.NORTH);
+            innerPanel1.add(field1,BorderLayout.SOUTH);
+            innerPanel2.add(label2,BorderLayout.NORTH);
+            innerPanel2.add(field2,BorderLayout.SOUTH);
+            innerPanel3.add(label3,BorderLayout.NORTH);
+            innerPanel3.add(field3,BorderLayout.SOUTH);
+            innerPanel4.add(label4,BorderLayout.NORTH);
+            innerPanel4.add(field4,BorderLayout.SOUTH);
+
+            innerPanel5.add(innerPanel1,BorderLayout.NORTH);
+            innerPanel5.add(innerPanel2,BorderLayout.SOUTH);
+            innerPanel6.add(innerPanel3,BorderLayout.NORTH);
+            innerPanel6.add(innerPanel4,BorderLayout.SOUTH);
+
+            outMostPanel.add(innerPanel5,BorderLayout.WEST);
+            outMostPanel.add(innerPanel6,BorderLayout.EAST);
+            outMostPanel.add(addButton,BorderLayout.CENTER);
+
+            outMostFrame.setContentPane(outMostPanel);
+            outMostFrame.setTitle("VolunteerManager");
+            outMostFrame.setSize(500, 200);
+
+            outMostFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            outMostFrame.setVisible(true);
+
+        }
+
+        class AddToListListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int id = Integer.parseInt(label1.getText().toString());
+                int year = Integer.parseInt(label4.getText().toString());
+                String name = label2.getText();
+                String major = label3.getText();
+                Volunteer newVolunteer = new UniversityVolunteer(name,major,
+                        id,year);
+                education.addVolunteers(newVolunteer);
+
+
+
+                // Reset the text field.
+                field1.requestFocusInWindow();
+                field1.setText("");
+                field2.requestFocusInWindow();
+                field2.setText("");
+                field3.requestFocusInWindow();
+                field3.setText("");
+                field4.requestFocusInWindow();
+                field4.setText("");
             }
-
-//            listModel.insertElementAt(employeeName.getText(), index);
-            //If we just wanted to add to the end, we'd do this:
-            //listModel.addElement(employeeName.getText());
-
-            //Reset the text field.
-//            employeeName.requestFocusInWindow();
-//            employeeName.setText("");
-
-            //Select the new item and make it visible.
-            volunteerList.setSelectedIndex(index);
-            volunteerList.ensureIndexIsVisible(index);
         }
 
-        @Override
-        public void insertUpdate(DocumentEvent e) {
 
-            enableButton();
-        }
 
         private void enableButton() {
             if (!alreadyEnabled) {
@@ -245,15 +305,6 @@ public class ClubAppGUI extends JFrame
         }
 
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-
-        }
     }
 
     class RemoveListener implements ActionListener {
@@ -262,6 +313,8 @@ public class ClubAppGUI extends JFrame
             //there's a valid selection
             //so go ahead and remove whatever's selected.
             int index = volunteerList.getSelectedIndex();
+            ArrayList<Volunteer> volunteers = education.getVolunteerList();
+            volunteers.remove(index);
             listModel.remove(index);
 
             int size = listModel.getSize();
@@ -286,6 +339,25 @@ public class ClubAppGUI extends JFrame
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            infoArea.selectAll();
+            infoArea.replaceSelection("");
+
+            int index = volunteerList.getSelectedIndex();
+            ArrayList<Volunteer> volunteers = education.getVolunteerList();
+            Volunteer volunteer = volunteers.get(index);
+
+            int id = volunteer.getId();
+            int year = volunteer.getYear();
+            String name = volunteer.getName();
+            String major = volunteer.getMajor();
+
+            infoArea.append("Name: " + name + "\nID: " + Integer.toString(id)
+                    + "\nMajor: " + major + "\nYear: " + Integer.toString(year));
+//            infoArea.append("ID: " + Integer.toString(id));
+//            infoArea.append("Major: " + major);
+//            infoArea.append("Year: " + Integer.toString(year));
+
+
         }
     }
 
@@ -299,9 +371,87 @@ public class ClubAppGUI extends JFrame
 
     class SaveListener implements ActionListener {
 
+        private JFrame outMostFrame;
+        private JPanel outMostPanel;
+
+        private JButton yesButton;
+        private JButton noButton;
+
+        private String yesString = "Yes";
+        private String noString = "No";
+
+        JLabel question;
+
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            outMostPanel = new JPanel(new BorderLayout());
+            outMostFrame = new JFrame();
+
+            JPanel buttonPane = new JPanel();
+            buttonPane.setLayout(new BoxLayout(buttonPane,
+                    BoxLayout.LINE_AXIS));
+
+            initThisButton();
+
+            buttonPane.add(yesButton);
+            buttonPane.add(Box.createHorizontalStrut(10));
+            buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+            buttonPane.add(Box.createHorizontalStrut(10));
+
+            buttonPane.add(noButton);
+
+            buttonPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+            question = new JLabel("Do you want to save your work?");
+
+            outMostPanel.add(question,BorderLayout.CENTER);
+            outMostPanel.add(buttonPane,BorderLayout.SOUTH);
+
+            outMostFrame.setContentPane(outMostPanel);
+            outMostFrame.setTitle("Save");
+            outMostFrame.setSize(300, 200);
+
+            outMostFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            outMostFrame.setVisible(true);
+
+
+        }
+
+        private void initThisButton() {
+            yesButton = new JButton(yesString);
+            noButton = new JButton(noString);
+
+            yesButton.setActionCommand(yesString);
+            yesButton.addActionListener(new YesListener());
+
+            noButton.setActionCommand(noString);
+            noButton.addActionListener(new NoListener());
+        }
+
+        class YesListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    jsonWriter.open();
+                    jsonWriter.write(education);
+                    jsonWriter.close();
+                    question.setText("Saved " + education.getName() + " to " + JSON_STORE);
+                } catch (FileNotFoundException ioe) {
+                    question.setText("Unable to write to file: " + JSON_STORE);
+                }
+            }
+        }
+
+        class NoListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                outMostFrame.setVisible(false);
+            }
         }
     }
 

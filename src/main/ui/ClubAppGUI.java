@@ -274,13 +274,19 @@ public class ClubAppGUI extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                int id = Integer.parseInt(label1.getText().toString());
-                int year = Integer.parseInt(label4.getText().toString());
-                String name = label2.getText();
-                String major = label3.getText();
+                int id = Integer.parseInt(field1.getText());
+                int year = Integer.parseInt(field4.getText());
+                String name = field2.getText();
+                String major = field3.getText();
                 Volunteer newVolunteer = new UniversityVolunteer(name,major,
                         id,year);
-                education.addVolunteers(newVolunteer);
+                if (education == null) {
+                    ArrayList<Volunteer> volunteers = new ArrayList<>();
+                    volunteers.add(newVolunteer);
+                } else {
+                    education.addVolunteers(newVolunteer);
+                    listModel.addElement(name);
+                }
 
 
 

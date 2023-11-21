@@ -66,6 +66,18 @@
             "year": 3,
             "name": "魏晨 🐔",
             "id": 100000
+        },
+        {
+            "major": "math",
+            "year": 3,
+            "name": "jerry",
+            "id": 1234
+        },
+        {
+            "major": "cs",
+            "year": 3,
+            "name": "Mark",
+            "id": 12345
         }
     ],
     "questionBeingAnsweredList": [{

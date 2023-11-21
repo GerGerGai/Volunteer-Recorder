@@ -54,3 +54,31 @@ state of the application or not when I quit the app.
 - As a general user, I want to be able to decide whether to resume the app from 
 where they left off or not when I start the application.
 
+### Instructions for Grader
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by:
+  - First, please click the load button and click yes, this will make everything easier. 
+    Otherwise, you have to start from an empty system and adding elements in my system requires some time.
+  - To add volunteers to the system, click the Add button.
+  - Type in the four inputs:
+    - id: must be an integer
+    - major: must be exactly the same as one of the four options
+    - name: a string
+    - year: an integer from 1 to 7.
+  - Then if you enlarge the window a little bit, there will be an Add button in the center (bad design I know :)
+  - Click that Add button.
+  - Then if you close the add window, you will see the new volunteer's name appears at the end.
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by:
+  - I have two actions for this actually
+  - First action, you click any name shown on the window and then click the remove button. This will remove the volunteer
+    from the system.
+  - Second action, you click any name shown on the window and then click the info button. This volunteer's detailed information
+    will be shown in the TextArea below.
+- You can locate my visual component by:
+  - If you make any changes to the system, please click the save button and click yes first. Otherwise, the visual component
+    will not show your new changes.
+  - Click the bar button. It will show a bar graph counting the number of volunteers in each major.
+- You can save the state of my application by: 
+  - click the save button and click yes
+- You can reload the state of my application by:
+  - click the load button and click yes
+

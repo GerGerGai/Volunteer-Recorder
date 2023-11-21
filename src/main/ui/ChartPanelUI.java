@@ -5,13 +5,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+// Inspired by "https://docs.oracle.com/javase/8/docs/api/" and "https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html"
+// UI for the bar chart
 public class ChartPanelUI extends JPanel {
     private double[] values;
 
@@ -19,12 +17,16 @@ public class ChartPanelUI extends JPanel {
 
     private String title;
 
+    // MODIFIES: this
+    // EFFECTS: create the bar chart GUI
     public ChartPanelUI(double[] v, String[] n, String t) {
         names = n;
         values = v;
         title = t;
     }
 
+    // MODIFIES: this
+    // EFFECTS: paint the bar charts
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -67,28 +69,11 @@ public class ChartPanelUI extends JPanel {
         y = clientHeight - labelFontMetrics.getDescent();
         g.setFont(labelFont);
 
-//        for (int i = 0; i < values.length; i++) {
-//            int valueX = i * barWidth + 1;
-//            int valueY = top;
-//            int height = (int) (values[i] * scale);
-//            if (values[i] >= 0) {
-//                valueY += (int) ((maxValue - values[i]) * scale);
-//            } else {
-//                valueY += (int) (maxValue * scale);
-//                height = -height;
-//            }
-//
-//            g.setColor(Color.red);
-//            g.fillRect(valueX, valueY, barWidth - 2, height);
-//            g.setColor(Color.black);
-//            g.drawRect(valueX, valueY, barWidth - 2, height);
-//            int labelWidth = labelFontMetrics.stringWidth(names[i]);
-//            x = i * barWidth + (barWidth - labelWidth) / 2;
-//            g.drawString(names[i], x, y);
-//        }
         drawGraph(barWidth,top,scale,maxValue,g,labelFontMetrics,x,y);
     }
 
+    // MODIFIES: this
+    // EFFECTS: draw the graph of the bars
     private void drawGraph(int barWidth,int top,double scale, double maxValue, Graphics g, FontMetrics labelFontMetrics,
                            int x,int y) {
         for (int i = 0; i < values.length; i++) {

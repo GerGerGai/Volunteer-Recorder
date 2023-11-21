@@ -14,7 +14,8 @@ import model.*;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
-
+// Inspired by "https://docs.oracle.com/javase/8/docs/api/" and "https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html"
+// GUI for volunteer manager
 public class ClubAppGUI extends JFrame
                         implements ListSelectionListener {
 
@@ -51,7 +52,7 @@ public class ClubAppGUI extends JFrame
     KenyaStudent student1;
 
 
-
+    // EFFECTS: create the Volunteer Manager GUI
     public ClubAppGUI() {
 
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -96,11 +97,14 @@ public class ClubAppGUI extends JFrame
 
     }
 
+    // EFFECTS: required by ListSelectionEvent
     @Override
     public void valueChanged(ListSelectionEvent e) {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: initialize all the buttons for the outmost frame
     private void initButtons() {
         addButton = new JButton(addString);
 //        AddListener addListener = new AddListener(addButton);
@@ -129,6 +133,8 @@ public class ClubAppGUI extends JFrame
         loadButton.addActionListener(new LoadListener());
     }
 
+    // MODIFIES: this
+    // EFFECTS: initialize the first half of button panel
     private JPanel initButtonPane1() {
         //Create a panel that uses BoxLayout.
         JPanel buttonPane = new JPanel();
@@ -162,6 +168,8 @@ public class ClubAppGUI extends JFrame
 
 
 
+    // MODIFIES: this
+    // EFFECTS: initialize the second half of button panel
     private JPanel initButtonPane2() {
         //Create a panel that uses BoxLayout.
         JPanel buttonPane = new JPanel();
@@ -180,6 +188,8 @@ public class ClubAppGUI extends JFrame
         return buttonPane;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initialize the volunteer list
     private void initVolunteerList() {
 
         volunteerList = new JList(listModel);
@@ -190,6 +200,7 @@ public class ClubAppGUI extends JFrame
 
     }
 
+    // the listener for AddButton
     class AddListener implements ActionListener {
         private boolean alreadyEnabled = false;
         private JButton button;
@@ -219,22 +230,15 @@ public class ClubAppGUI extends JFrame
 
 
         //Required by ActionListener.
+        // MODIFIES: this
+        // EFFECTS: perform the action for add volunteer
         public void actionPerformed(ActionEvent e) {
-//            String name = employeeName.getText();
-//
-//            //User didn't type in a unique name...
-//            if (name.equals("") || alreadyInList(name)) {
-//                Toolkit.getDefaultToolkit().beep();
-//                employeeName.requestFocusInWindow();
-//                employeeName.selectAll();
-//                return;
-//            }
-
             setUpWindow();
-
 
         }
 
+        // MODIFIES: this
+        // EFFECTS: set up the window well
         private void setUpWindow() {
 
             addButton.setActionCommand("Add");
@@ -267,8 +271,11 @@ public class ClubAppGUI extends JFrame
 
         }
 
+        // Listener for the add button within the add volunteer window
         class AddToListListener implements ActionListener {
 
+            // MODIFIES: this
+            // EFFECTS: add volunteer to the GUI and the system
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -302,6 +309,8 @@ public class ClubAppGUI extends JFrame
 
 
 
+        // MODIFIES: this
+        // EFFECTS: change the status of the button
         private void enableButton() {
             if (!alreadyEnabled) {
                 button.setEnabled(true);
@@ -311,7 +320,11 @@ public class ClubAppGUI extends JFrame
 
     }
 
+    // Listener for remove volunteer button
     class RemoveListener implements ActionListener {
+
+        // MODIFIES: this
+        // EFFECTS: remove the indexed volunteer from GUI and the system
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
             //there's a valid selection
@@ -338,8 +351,13 @@ public class ClubAppGUI extends JFrame
         }
     }
 
+
+    // Listener for info button
     class InfoListener implements ActionListener {
 
+
+        // MODIFIES: this
+        // EFFECTS: show the detailed information of the selected volunteer
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -357,14 +375,12 @@ public class ClubAppGUI extends JFrame
 
             infoArea.append("Name: " + name + "\nID: " + Integer.toString(id)
                     + "\nMajor: " + major + "\nYear: " + Integer.toString(year));
-//            infoArea.append("ID: " + Integer.toString(id));
-//            infoArea.append("Major: " + major);
-//            infoArea.append("Year: " + Integer.toString(year));
-
 
         }
     }
 
+
+    // Listener for the bar button
     class BarListener implements ActionListener {
 
         ArrayList<Volunteer> volunteers;
@@ -380,6 +396,8 @@ public class ClubAppGUI extends JFrame
 
         ChartPanelUI chartPanelUI = new ChartPanelUI(values,names,"Major: # of Students");
 
+        // MODIFIES: this
+        // EFFECTS: show the bar graph of number of students in each major
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -394,34 +412,18 @@ public class ClubAppGUI extends JFrame
 
             }
 
-//            values[0] = 1;
-//            names[0] = "Item 1";
-//
-//            values[1] = 8;
-//            names[1] = "Item 2: " + values[1];
-//
-//            values[2] = 10;
-//            names[2] = "Item 3";
-//
-//            values[3] = 20;
-//            names[3] = "Item 4: " + values[3];
-//
-//            outMostFrame.getContentPane().add(new ChartPanel(values, names, "Major: # of Students"));
-
             setUpData();
 
             outMostFrame.getContentPane().add(chartPanelUI);
 
-//            WindowListener wndCloser = new WindowAdapter() {
-//                public void windowClosing(WindowEvent e) {
-//                    System.exit(0);
-//                }
-//            };
+
             outMostFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             outMostFrame.setVisible(true);
 
         }
 
+        // MODIFIES: this
+        // EFFECTS: count the number of students in each major
         private void countNums() {
             mathNum = 0;
             chemNum = 0;
@@ -440,6 +442,8 @@ public class ClubAppGUI extends JFrame
             }
         }
 
+        // MODIFIES: this
+        // EFFECTS: show up the bar frame
         private void setUpData() {
 
             values[0] = mathNum;
@@ -460,6 +464,7 @@ public class ClubAppGUI extends JFrame
 
     }
 
+    // Listener for save button
     class SaveListener implements ActionListener {
 
         private JFrame outMostFrame;
@@ -474,6 +479,8 @@ public class ClubAppGUI extends JFrame
         JLabel question;
 
 
+        // MODIFIES: this
+        // EFFECTS: Save the system's current state
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -510,6 +517,8 @@ public class ClubAppGUI extends JFrame
 
         }
 
+        // MODIFIES: this
+        // EFFECTS: initialize the current buttons
         private void initThisButton() {
             yesButton = new JButton(yesString);
             noButton = new JButton(noString);
@@ -521,8 +530,12 @@ public class ClubAppGUI extends JFrame
             noButton.addActionListener(new NoListener());
         }
 
+
+        // Listener for the yes button
         class YesListener implements ActionListener {
 
+            // MODIFIES: this
+            // EFFECTS: save the system
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -537,8 +550,11 @@ public class ClubAppGUI extends JFrame
             }
         }
 
+        // Listener for the no button
         class NoListener implements ActionListener {
 
+            // MODIFIES: this
+            // EFFECTS: do not save the system.
             @Override
             public void actionPerformed(ActionEvent e) {
                 outMostFrame.setVisible(false);
@@ -546,6 +562,7 @@ public class ClubAppGUI extends JFrame
         }
     }
 
+    // Listener for the load button
     class LoadListener implements ActionListener {
 
         private JFrame outMostFrame;
@@ -559,6 +576,8 @@ public class ClubAppGUI extends JFrame
 
         JLabel question;
 
+        // MODIFIES: this
+        // EFFECTS: load the system from last time
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -596,8 +615,11 @@ public class ClubAppGUI extends JFrame
 
         }
 
+        // Listener for the yes button
         class YesListener implements ActionListener {
 
+            // MODIFIES: this
+            // EFFECTS: load the history
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -618,8 +640,11 @@ public class ClubAppGUI extends JFrame
             }
         }
 
+        // Listener for the no button
         class NoListener implements ActionListener {
 
+            // MODIFIES: this
+            // EFFECTS: do not load the history
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -628,6 +653,8 @@ public class ClubAppGUI extends JFrame
             }
         }
 
+        // MODIFIES: this
+        // EFFECTS: initialize the current button
         private void initThisButton() {
             yesButton = new JButton(yesString);
             noButton = new JButton(noString);
@@ -640,26 +667,5 @@ public class ClubAppGUI extends JFrame
         }
     }
 
-//    private static void createAndShowGUI() {
-//        //Create and set up the window.
-//        JFrame frame = new JFrame("ClubAppForVolunteers");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        //Create and set up the content pane.
-//        JComponent newContentPane = new ClubAppGUI();
-//        newContentPane.setOpaque(true); //content panes must be opaque
-//        frame.setContentPane(newContentPane);
-//
-//        //Display the window.
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
-//
-//    public static void main(String[] args) {
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
-//    }
+
 }

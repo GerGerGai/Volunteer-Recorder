@@ -36,9 +36,23 @@ public class ClubApp {
 
     // EFFECTS: constructs the club and runs the club application
     public ClubApp() throws FileNotFoundException {
+        String command111 = null;
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        runClubApp();
+        Scanner inputLoad = new Scanner(System.in);
+        System.out.println("\n Do you want to: ");
+        System.out.println("\tg -> Open the Volunteers Manager.");
+        System.out.println("\tc -> Work in the Console");
+
+        command111 = inputLoad.next();
+        command111 = command111.toLowerCase();
+
+        if (command111.equals("g")) {
+            new ClubAppGUI();
+        } else {
+            runClubApp();
+        }
+
     }
 
     // MODIFIES: this

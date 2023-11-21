@@ -6,11 +6,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 import model.*;
 import persistance.JsonReader;
@@ -202,7 +200,7 @@ public class ClubAppGUI extends JFrame
         private JLabel label2 = new JLabel("name");
         private JTextField field2 = new JTextField(20);
 
-        private JLabel label3 = new JLabel("major");
+        private JLabel label3 = new JLabel("major: input exactly one of the four: math, chemistry, biology, physics");
         private JTextField field3 = new JTextField(20);
 
         private JLabel label4 = new JLabel("year");
@@ -369,10 +367,97 @@ public class ClubAppGUI extends JFrame
 
     class BarListener implements ActionListener {
 
+        ArrayList<Volunteer> volunteers;
+        int mathNum = 0;
+        int physNum = 0;
+        int chemNum = 0;
+        int bioNum = 0;
+
+        double[] values = new double[4];
+        String[] names = new String[4];
+
+        JFrame outMostFrame = new JFrame();
+
+        ChartPanelUI chartPanelUI = new ChartPanelUI(values,names,"Major: # of Students");
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
+
+            outMostFrame.setSize(400, 300);
+
+            if (education == null) {
+                volunteers = new ArrayList<>();
+            } else {
+                volunteers = education.getVolunteerList();
+                countNums();
+
+            }
+
+//            values[0] = 1;
+//            names[0] = "Item 1";
+//
+//            values[1] = 8;
+//            names[1] = "Item 2: " + values[1];
+//
+//            values[2] = 10;
+//            names[2] = "Item 3";
+//
+//            values[3] = 20;
+//            names[3] = "Item 4: " + values[3];
+//
+//            outMostFrame.getContentPane().add(new ChartPanel(values, names, "Major: # of Students"));
+
+            setUpData();
+
+            outMostFrame.getContentPane().add(chartPanelUI);
+
+//            WindowListener wndCloser = new WindowAdapter() {
+//                public void windowClosing(WindowEvent e) {
+//                    System.exit(0);
+//                }
+//            };
+            outMostFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            outMostFrame.setVisible(true);
+
         }
+
+        private void countNums() {
+            mathNum = 0;
+            chemNum = 0;
+            physNum = 0;
+            bioNum = 0;
+            for (Volunteer volunteer : volunteers) {
+                if (volunteer.getMajor().equals("math")) {
+                    mathNum++;
+                } else if (volunteer.getMajor().equals("chemistry")) {
+                    chemNum++;
+                } else if (volunteer.getMajor().equals("physics")) {
+                    physNum++;
+                } else if (volunteer.getMajor().equals("biology")) {
+                    bioNum++;
+                }
+            }
+        }
+
+        private void setUpData() {
+
+            values[0] = mathNum;
+            names[0] = "Math: " + mathNum;
+
+            values[1] = physNum;
+            names[1] = "Physics: " + physNum;
+
+            values[2] = chemNum;
+            names[2] = "Chemistry: " + chemNum;
+
+            values[3] = bioNum;
+            names[3] = "Biology: " + bioNum;
+
+
+
+        }
+
     }
 
     class SaveListener implements ActionListener {

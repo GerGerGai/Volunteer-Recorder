@@ -75,15 +75,15 @@
         },
         {
             "major": "math",
-            "year": 2,
-            "name": "Jerry",
-            "id": 10009
-        },
-        {
-            "major": "math",
             "year": 3,
             "name": "Jack",
             "id": 10005
+        },
+        {
+            "major": "physics",
+            "year": 2,
+            "name": "Jack",
+            "id": 10000
         }
     ],
     "questionBeingAnsweredList": [{

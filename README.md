@@ -55,6 +55,7 @@ state of the application or not when I quit the app.
 where they left off or not when I start the application.
 
 ### Instructions for Grader
+- First, you need to run the Main class and type in g in the console in order to open the GUI.
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by:
   - First, please click the load button and click yes, this will make everything easier. 
     Otherwise, you have to start from an empty system and adding elements in my system requires some time.

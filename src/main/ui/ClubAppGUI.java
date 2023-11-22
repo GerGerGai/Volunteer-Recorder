@@ -544,9 +544,28 @@ public class ClubAppGUI extends JFrame
                     jsonWriter.write(education);
                     jsonWriter.close();
                     question.setText("Saved " + education.getName() + " to " + JSON_STORE);
+                    showImage();
                 } catch (FileNotFoundException ioe) {
                     question.setText("Unable to write to file: " + JSON_STORE);
                 }
+            }
+
+            // MODIFIES: this
+            // EFFECTS: pop up a check mark image
+            private void showImage() {
+                JFrame frame = new JFrame("Saved!");
+                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+                try {
+                    ImageIcon image = new ImageIcon("myimage.png");
+                    JLabel displayField = new JLabel(image);
+                    frame.add(displayField);
+                } catch (Exception exception) {
+                    System.out.println("Image not found!");
+                }
+
+                frame.setSize(300,300);
+                frame.setVisible(true);
             }
         }
 
@@ -665,6 +684,10 @@ public class ClubAppGUI extends JFrame
             noButton.setActionCommand(noString);
             noButton.addActionListener(new NoListener());
         }
+    }
+
+    public static void main(String[] args) {
+        new ClubAppGUI();
     }
 
 

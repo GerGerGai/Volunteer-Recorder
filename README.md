@@ -55,7 +55,7 @@ state of the application or not when I quit the app.
 where they left off or not when I start the application.
 
 ### Instructions for Grader
-- First, you need to run the Main class and type in g in the console in order to open the GUI.
+- First, you need to run the ClubAppGUI to open the GUI
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by:
   - First, please click the load button and click yes, this will make everything easier. 
     Otherwise, you have to start from an empty system and adding elements in my system requires some time.
@@ -75,9 +75,13 @@ where they left off or not when I start the application.
   - Second action, you click any name shown on the window and then click the info button. This volunteer's detailed information
     will be shown in the TextArea below.
 - You can locate my visual component by:
-  - If you make any changes to the system, please click the save button and click yes first. Otherwise, the visual component
-    will not show your new changes.
-  - Click the bar button. It will show a bar graph counting the number of volunteers in each major.
+  - I have two actions for this as well:
+  - First:
+    - If you click the save button and then click yes, there will be a check image popping up.`
+  - Second
+     - If you make any changes to the system, please click the save button and click yes first. Otherwise, the visual component
+       will not show your new changes.
+     - Click the bar button. It will show a bar graph counting the number of volunteers in each major.
 - You can save the state of my application by: 
   - click the save button and click yes
 - You can reload the state of my application by:

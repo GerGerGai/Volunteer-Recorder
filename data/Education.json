@@ -57,33 +57,21 @@
         },
         {
             "major": "physics",
-            "year": 4,
-            "name": "Emma",
-            "id": 10003
+            "year": 2,
+            "name": "Jack",
+            "id": 10000
         },
         {
             "major": "biology",
             "year": 2,
-            "name": "Lucy",
-            "id": 10005
+            "name": "Mark",
+            "id": 10003
         },
         {
             "major": "math",
             "year": 3,
-            "name": "Jerry",
-            "id": 10006
-        },
-        {
-            "major": "math",
-            "year": 3,
-            "name": "Jack",
-            "id": 10005
-        },
-        {
-            "major": "physics",
-            "year": 2,
-            "name": "Jack",
-            "id": 10000
+            "name": "Wilson",
+            "id": 10009
         }
     ],
     "questionBeingAnsweredList": [{

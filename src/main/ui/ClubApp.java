@@ -39,19 +39,9 @@ public class ClubApp {
         String command111 = null;
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        Scanner inputLoad = new Scanner(System.in);
-        System.out.println("\n Do you want to: ");
-        System.out.println("\tg -> Open the Volunteers Manager.");
-        System.out.println("\tc -> Work in the Console");
 
-        command111 = inputLoad.next();
-        command111 = command111.toLowerCase();
+        runClubApp();
 
-        if (command111.equals("g")) {
-            new ClubAppGUI();
-        } else {
-            runClubApp();
-        }
 
     }
 

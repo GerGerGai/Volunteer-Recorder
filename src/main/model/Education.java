@@ -58,6 +58,7 @@ public class Education implements Writable {
     public void addVolunteers(Volunteer volunteer) {
         if (!volunteerList.contains(volunteer)) {
             volunteerList.add(volunteer);
+            EventLog.getInstance().logEvent(new Event("Add a new volunteer with id: " + volunteer.getId()));
         }
     }
 
@@ -66,6 +67,8 @@ public class Education implements Writable {
     //EFFECTS: remove the volunteer from the volunteer list
     public void removeVolunteers(Volunteer volunteer) {
         volunteerList.remove(volunteer);
+        EventLog.getInstance().logEvent(new Event("Remove a volunteer with id: " + volunteer.getId()));
+
     }
 
     //MODIFIES: this

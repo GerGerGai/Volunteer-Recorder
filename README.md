@@ -87,3 +87,22 @@ where they left off or not when I start the application.
 - You can reload the state of my application by:
   - click the load button and click yes
 
+### Phase 4: Task 2
+Wed Nov 29 15:41:24 PST 2023
+Event log cleared.
+
+
+
+Wed Nov 29 15:41:38 PST 2023
+Add a new volunteer with id: 12345
+
+
+
+Wed Nov 29 15:41:48 PST 2023
+Add a new volunteer with id: 2333
+
+
+
+Wed Nov 29 15:41:55 PST 2023
+Remove a volunteer with id: 122222
+

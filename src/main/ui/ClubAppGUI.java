@@ -11,13 +11,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import model.*;
+import model.Event;
+import model.exceptions.LogException;
 import persistance.JsonReader;
 import persistance.JsonWriter;
+
+
+
 
 // Inspired by "https://docs.oracle.com/javase/8/docs/api/" and "https://docs.oracle.com/javase/7/docs/api/javax/swing/package-summary.html"
 // GUI for volunteer manager
 public class ClubAppGUI extends JFrame
-                        implements ListSelectionListener {
+                        implements ListSelectionListener, WindowListener {
 
     private JList volunteerList;
     private DefaultListModel listModel;
@@ -92,6 +97,7 @@ public class ClubAppGUI extends JFrame
         setSize(WIDTH, HEIGHT);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(this);
         setVisible(true);
 
 
@@ -197,6 +203,52 @@ public class ClubAppGUI extends JFrame
         volunteerList.setSelectedIndex(0);
         volunteerList.addListSelectionListener(this);
         volunteerList.setVisibleRowCount(5);
+
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+        EventLog events = EventLog.getInstance();
+
+
+        for (Event next : events) {
+            System.out.println(next.toString());
+            System.out.println("\n\n");
+        }
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+
+    }
+
+
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
 
     }
 
@@ -331,7 +383,8 @@ public class ClubAppGUI extends JFrame
             //so go ahead and remove whatever's selected.
             int index = volunteerList.getSelectedIndex();
             ArrayList<Volunteer> volunteers = education.getVolunteerList();
-            volunteers.remove(index);
+            Volunteer removeVolunteer = volunteers.get(index);
+            education.removeVolunteers(removeVolunteer);
             listModel.remove(index);
 
             int size = listModel.getSize();
@@ -650,6 +703,8 @@ public class ClubAppGUI extends JFrame
                         listModel.addElement(name);
                     }
                     outMostFrame.setVisible(false);
+                    EventLog.getInstance().clear();
+
 
 
                 } catch (IOException ioe) {

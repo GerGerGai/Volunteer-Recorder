@@ -12,7 +12,6 @@ import java.io.IOException;
 
 import model.*;
 import model.Event;
-import model.exceptions.LogException;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 

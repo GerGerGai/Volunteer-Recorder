@@ -106,3 +106,11 @@ Add a new volunteer with id: 2333
 Wed Nov 29 15:41:55 PST 2023
 Remove a volunteer with id: 122222
 
+### Phase 4: Task 3
+The refactoring I'm going to perform is to create three more classes called: VolunteerList, StudentList and QuestionList
+to store the volunteers, students and questions separately in my system. Right now, I'm having a list of volunteers, a list
+of students and a list of questions in my education class and perform all the operations on those lists in that class. This causes
+a low cohesion in my education class because there are clearly separate clusters if you only draw the UML for education class.
+The app will be more cohesive and manageable as time goes by if I refactor different classes to perform operations separately on
+students, volunteers and questions. I then only need to call the methods of those list classes in the education class.
+

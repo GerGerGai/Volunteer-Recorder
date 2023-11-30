@@ -51,7 +51,6 @@ public class ClubAppGUI extends JFrame
     private JsonReader jsonReader;
 
     Education education;
-    Director director1;
     UniversityVolunteer volunteer1;
     KenyaStudent student1;
 

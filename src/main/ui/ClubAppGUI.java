@@ -51,8 +51,7 @@ public class ClubAppGUI extends JFrame
     private JsonReader jsonReader;
 
     Education education;
-    UniversityVolunteer volunteer1;
-    KenyaStudent student1;
+
 
 
     // EFFECTS: create the Volunteer Manager GUI

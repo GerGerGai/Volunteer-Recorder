@@ -50,18 +50,6 @@
             "id": 1000
         },
         {
-            "major": "physics",
-            "year": 2,
-            "name": "Jack",
-            "id": 10000
-        },
-        {
-            "major": "math",
-            "year": 2,
-            "name": "Ma",
-            "id": 12345
-        },
-        {
             "major": "math",
             "year": 4,
             "name": "Je",
@@ -74,16 +62,16 @@
             "id": 2323
         },
         {
-            "major": "chemistry",
-            "year": 2,
-            "name": "Jack",
-            "id": 12345
-        },
-        {
             "major": "math",
             "year": 4,
             "name": "Wilson J",
             "id": 2333
+        },
+        {
+            "major": "math",
+            "year": 5,
+            "name": "Gai",
+            "id": 22222
         }
     ],
     "questionBeingAnsweredList": [{

@@ -57,21 +57,21 @@
         },
         {
             "major": "math",
-            "year": 2,
-            "name": "J",
-            "id": 2323
-        },
-        {
-            "major": "math",
-            "year": 4,
-            "name": "Wilson J",
-            "id": 2333
-        },
-        {
-            "major": "math",
             "year": 5,
             "name": "Gai",
             "id": 22222
+        },
+        {
+            "major": "math",
+            "year": 3,
+            "name": "Jerry",
+            "id": 222
+        },
+        {
+            "major": "chemistry",
+            "year": 2,
+            "name": "Mark",
+            "id": 2333
         }
     ],
     "questionBeingAnsweredList": [{

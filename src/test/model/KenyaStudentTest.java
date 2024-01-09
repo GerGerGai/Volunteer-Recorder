@@ -30,10 +30,6 @@ public class KenyaStudentTest {
 
         education = new Education("aa");
 
-        ac1 = new AcademicConfusion(10001);
-        ac2 = new AcademicConfusion(10002);
-        ac3 = new AcademicConfusion(10003);
-
         volunteer1 = new UniversityVolunteer("Mark",
                 "math",10000,3);
         volunteer2 = new UniversityVolunteer("Ben",
@@ -42,11 +38,15 @@ public class KenyaStudentTest {
 
     @Test
     public void testSetAcademicConfusion() {
-        assertNull(student1.getAcademicConfusion());
+        AcademicConfusion academicConfusion = student1.getAcademicConfusion();
+        assertEquals(student1.getId(), academicConfusion.getId());
+        assertNull(academicConfusion.getSubject());
+        assertNull(academicConfusion.getDescription());
 
-        student1.setAcademicConfusion(ac1);
+        student1.setAcademicConfusion("math","1+1");
 
-        assertEquals(ac1,student1.getAcademicConfusion());
+        assertEquals("math",academicConfusion.getSubject());
+        assertEquals("1+1",academicConfusion.getDescription());
     }
 
     @Test

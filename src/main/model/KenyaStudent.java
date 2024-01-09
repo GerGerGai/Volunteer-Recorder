@@ -19,15 +19,16 @@ public class KenyaStudent implements Writable {
         this.id = id;
         this.name = name;
         this.grade = grade;
-        this.academicConfusion = null;
+        this.academicConfusion = new AcademicConfusion(id);
     }
 
     // REQUIRES: each student can only have one academic confusion.
     // MODIFIES: this.
     // EFFECTS: set the student's academic confusion.
     //          can also be used to update the academic confusion.
-    public void setAcademicConfusion(AcademicConfusion academicConfusion) {
-        this.academicConfusion = academicConfusion;
+    public void setAcademicConfusion(String subject, String description) {
+        this.academicConfusion.setSubject(subject);
+        this.academicConfusion.setDescription(description);
     }
 
 

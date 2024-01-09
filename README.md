@@ -2,7 +2,7 @@
 
 ### What will the application do:
 
-A few friends and I are starting a club called UBC IMPACT, 
+A few friends and I are starting an NGO called IMPACT, 
 helping slum kids in Kenya. Our club will consist of two 
 departments: Education and Funding. For the Education part, 
 we will have UBC volunteers from different majors help answer 
@@ -10,19 +10,14 @@ academic questions from Kenya high school students, and we will
 record teaching videos or find free resources online to address 
 certain topics that students need clarifications on. For the Funding 
 part, we will organize fundraiser events to help them resolve 
-financial issues. I am designing this application to help us save 
-and update all the information from the Kenya and UBC sides for our 
-Education Department.
+financial issues. I am designing this software to
+help us save and update all the volunteers and Kenya students
+we have. This is the current goal of this project and it will
+be expanding as we go.
 
 ### Who will use this app:
-- Kenya high school students. The students are coming from Korogocho, 
-which is one of the largest slum regions in Kenya. They join our club with 
-academic confusion and financial issues. All the academic problems they are 
-encountering will be saved into this application and accessible by UBC volunteers.
-- UBC volunteers. These are academically strong and kind-hearted UBC students 
-coming from different majors. Our application will save their information 
-for directors to match them with Kenyan students. They can also access all 
-the data from Kenya independently and spot the issues they can help most.
+Directors and volunteers from our side to record information of all
+the main people involved in our initiative.
 
 
 ### Why is this project of interest to me:
@@ -30,8 +25,8 @@ the data from Kenya independently and spot the issues they can help most.
 particularly for science education in marginalized communities. 
 Our members are passionate about narrowing that gap on behalf of 
 the UBC Science Community.
-- After two months of planning, we just realized that this is a complicated 
-thing to do, and a part of the reason is that there is so much information 
+- We just realized that this is a complicated 
+thing to do, and there is so much information 
 to process and match from both sides that human brains cannot manage. 
 This app will help us a lot in terms of saving, updating and matching 
 information and resources.

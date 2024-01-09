@@ -67,7 +67,7 @@ public class Director extends Volunteer {
             if (confusion != null) {
                 if (!confusions.contains(confusion)
                         & !beingAnswered.contains(confusion)) {
-                    student.setAcademicConfusion(null);
+                    student.setAcademicConfusion(null,null);
                 }
             }
         }
